@@ -18,4 +18,21 @@ storageProductos.get('/', (req, res)=>{
     )
 })
 
+storageProductos.post('/', (req, res)=>{
+    const {} = req.body
+
+    con.query(
+        /*sql*/``,
+        [],
+        (err, data, fill)=>{
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            } else {
+                res.send(JSON.stringify(data))
+            }
+        }
+    )
+})
+
 export default storageProductos;
