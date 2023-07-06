@@ -159,3 +159,7 @@ USE db_prueba_backend_sql;
 INSERT INTO bodegas (nombre, id_responsable, estado, created_by, update_by, updated_at,  	deleted_at) VALUES (:name, :responsable, :estado, :created_by, :update_by, :update_at, :delete_at);
 
 SELECT * FROM bodegas WHERE nombre = "Bodega321";
+
+SELECT id_producto, COUNT(*) AS cantidad FROM inventarios GROUP BY id_producto HAVING COUNT(*) > 1;
+
+SELECT DISTINCT id_producto, (SELECT SUM(cantidad) FROM inventarios WHERE id_producto = t.id_producto) AS total FROM inventarios AS t WHERE id_producto IN (SELECT id_producto FROM inventarios GROUP BY id_producto HAVING COUNT(*) > 0) ORDER BY total;

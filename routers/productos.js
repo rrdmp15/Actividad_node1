@@ -11,7 +11,7 @@ storageProductos.use((req, res, next) => {
 
 storageProductos.get('/', (req, res)=>{
     con.query(
-        /*sql*/`SELECT * FROM productos`,
+        /*sql*/`SELECT DISTINCT id_producto, (SELECT SUM(cantidad) FROM inventarios WHERE id_producto = t.id_producto) AS total FROM inventarios AS t WHERE id_producto IN (SELECT id_producto FROM inventarios GROUP BY id_producto HAVING COUNT(*) > 0) ORDER BY total;`,
         (err, data, fil)=>{
             res.send(JSON.stringify(data));
         }
